@@ -1,19 +1,25 @@
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.UI;
 using ViewModel.Extensions.PT;
 
-public class PlayerView : MonoBehaviour
+/// <summary>
+/// View : 보여줄 수 있는 파트를 담당.
+///        ViewModel을 가지고 있으며, LogicManager에서 직접적인 정보를 받지 않는다.
+///        ViewModel이 갱신될 때, 이벤트로 요청 받아 변경된다.(OnPropertyChanged)
+/// </summary>
+public class TopLeftUI : MonoBehaviour
 {
-    [SerializeField] TextMesh TextMesh_Name;
-    [SerializeField] TextMesh TextMesh_Level;
-    [SerializeField] Animator Animator_Player;
-    [SerializeField] GameObject Prefab_SpecialLevelUp;
+    [SerializeField] Text Text_Name;
+    [SerializeField] Text Text_level;
+    [SerializeField] Image Image_Icon;
 
+    // 뷰모델을 들고있게 된다.
     private TempProfileViewModel _vm;
 
     private void OnEnable()
     {
-        if (_vm == null)
+        if(_vm == null)
         {
             _vm = new TempProfileViewModel();
             _vm.PropertyChanged += OnPropertyChanged;
@@ -24,7 +30,7 @@ public class PlayerView : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_vm != null)
+        if(_vm != null)
         {
             _vm.UnRegisterOnDisable();
             _vm.PropertyChanged -= OnPropertyChanged;
@@ -37,19 +43,11 @@ public class PlayerView : MonoBehaviour
         switch (e.PropertyName)
         {
             case nameof(_vm.Name):
-                TextMesh_Name.text = $"이름 : {_vm.Name}";
+                Text_Name.text = $"이름 : {_vm.Name}";
                 break;
             case nameof(_vm.Level):
-                TextMesh_Level.text = $"레벨 : {_vm.Level}";
+                Text_level.text = $"레벨 : {_vm.Level}";
                 break;
         }
-    }
-
-    private void CheckSpecialLevelUP(int level)
-    {
-        if (level % 10 == 0)
-        {
-            Instantiate(Prefab_SpecialLevelUp, this.transform);
-        }
-    }
+    }    
 }
