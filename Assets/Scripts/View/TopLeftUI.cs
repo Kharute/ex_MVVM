@@ -13,10 +13,15 @@ public class TopLeftUI : MonoBehaviour
     [SerializeField] Text Text_Name;
     [SerializeField] Text Text_level;
     [SerializeField] Image Image_Icon;
+    [SerializeField] Slider Slider_HP;
 
     // 뷰모델을 들고있게 된다.
     private TempProfileViewModel _vm;
 
+    private void Awake()
+    {
+        
+    }
     private void OnEnable()
     {
         if(_vm == null)
@@ -48,6 +53,10 @@ public class TopLeftUI : MonoBehaviour
             case nameof(_vm.Level):
                 Text_level.text = $"레벨 : {_vm.Level}";
                 break;
+            case nameof(_vm.HP):
+                Slider_HP.value = _vm.HP;
+                break;
+                
         }
     }    
 }

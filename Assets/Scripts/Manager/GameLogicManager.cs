@@ -18,11 +18,13 @@ public class Player
         UserId = userId;
         Name = name;
         Level = 0;
+        HP = 100;
     }
 
     public int UserId { get; private set; }
     public string Name { get; set; }
     public int Level { get; set; }
+    public int HP { get; set; }
 }
 
 // ID를 미리 선택하면 RefreshViewModel()에서 변경 가능
@@ -35,6 +37,7 @@ public class GameLogicManager
     private static Dictionary<int, Player> _playerDic = new Dictionary<int, Player>();
     private Action<int, int> _levelUpCallback;
     private Action<int, string> _nameChangeCallback;
+    private Action<int, int> _hpChangeCallback;
 
     public static GameLogicManager Inst
     {
@@ -71,11 +74,19 @@ public class GameLogicManager
         _nameChangeCallback += NameChangeCallback;
     }
 
+    public void Register_HPChangeCallback(Action<int, int> HPChangeCallback)
+    {
+        _hpChangeCallback += HPChangeCallback;
+    }
+
     public void UnRegister_NameChangeCallback(Action<int, string> NameChangeCallback)
     {
         _nameChangeCallback -= NameChangeCallback;
     }
-
+    public void UnRegister_HPChangeCallback(Action<int, int> HPChangeCallback)
+    {
+        _hpChangeCallback -= HPChangeCallback;
+    }
 
     public void RequestLevelUp()
     {
@@ -88,6 +99,7 @@ public class GameLogicManager
             _levelUpCallback.Invoke(reqUserId, curPlayer.Level);
         }
     }
+
     public void RequestLevelUpDouble()
     {
         int reqUserId = _curSelectedPlayerId;
@@ -97,6 +109,19 @@ public class GameLogicManager
             var curPlayer = _playerDic[reqUserId];
             curPlayer.Level += 2;
             _levelUpCallback.Invoke(reqUserId, curPlayer.Level);
+        }
+    }
+
+
+    public void RequestHPChange(int hp)
+    {
+        int reqUserId = _curSelectedPlayerId;
+
+        if (_playerDic.ContainsKey(reqUserId))
+        {
+            var curPlayer = _playerDic[reqUserId];
+            curPlayer.HP += hp;
+            _hpChangeCallback.Invoke(reqUserId, curPlayer.HP);
         }
     }
 
@@ -112,13 +137,13 @@ public class GameLogicManager
         }
     }
 
-    public void RefreshCharacterInfo(int requestId, Action<int, string, int> callback)
+    public void RefreshCharacterInfo(int requestId, Action<int, string, int, int> callback)
     {
         _curSelectedPlayerId = requestId;
         if (_playerDic.ContainsKey(requestId))
         {
             var curPlayer = _playerDic[requestId];
-            callback.Invoke(curPlayer.UserId, curPlayer.Name, curPlayer.Level);
+            callback.Invoke(curPlayer.UserId, curPlayer.Name, curPlayer.Level, curPlayer.HP);
         }
     }
 }

@@ -14,7 +14,7 @@ public static class TopLeftModelExtention
     public static void RefreshViewModel(this TopLeftViewModel vm)
     {
         int tempId = 2;
-        GameLogicManager.Inst.RefreshCharacterInfo(tempId, vm.OnRefreshViewModel);
+        //GameLogicManager.Inst.RefreshCharacterInfo(tempId, vm.OnRefreshViewModel);
     }
 
     public static void OnRefreshViewModel(this TopLeftViewModel vm, int userId, string name, int level)

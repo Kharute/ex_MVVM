@@ -10,6 +10,7 @@ public class TempProfileUI : MonoBehaviour
 
     [SerializeField] Text Text_Name;
     [SerializeField] Text Text_Level;
+    [SerializeField] Text Text_HP;
 
     private TempProfileViewModel _vm;
 
@@ -44,6 +45,10 @@ public class TempProfileUI : MonoBehaviour
             case nameof(_vm.Level):
                 Text_Level.text = $"레벨 : {_vm.Level}";
                 break;
+            case nameof(_vm.HP):
+                Text_HP.text = $"체력 : {_vm.HP}";
+                break;
+
         }
     }
 

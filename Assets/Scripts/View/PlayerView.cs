@@ -41,6 +41,8 @@ public class PlayerView : MonoBehaviour
                 break;
             case nameof(_vm.Level):
                 TextMesh_Level.text = $"·¹º§ : {_vm.Level}";
+                Animator_Player.SetTrigger("LevelUp");
+                CheckSpecialLevelUP(_vm.Level);
                 break;
         }
     }

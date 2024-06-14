@@ -6,7 +6,7 @@ namespace ViewModel.Extensions
         public static void RefreshViewModel(this SubProfileViewModel vm)
         {
             int tempId = 2;
-            GameLogicManager.Inst.RefreshCharacterInfo(tempId, vm.OnRefreshViewModel);
+            //GameLogicManager.Inst.RefreshCharacterInfo(tempId, vm.OnRefreshViewModel);
         }
 
         public static void OnRefreshViewModel(this SubProfileViewModel vm, int userId, string name, int level)

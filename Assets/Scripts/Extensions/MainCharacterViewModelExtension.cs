@@ -9,7 +9,7 @@ namespace ViewModel.Extensions
         public static void RefreshViewModel(this MainCharacterProfileViewModel vm)
         {
             int tempId = 2; // 이 부분은 나중에 유저 아이디를 가지고 있던지 해서 받아와서 넣어주자
-            GameLogicManager.Inst.RefreshCharacterInfo(tempId, vm.OnRefreshViewModel);
+            //GameLogicManager.Inst.RefreshCharacterInfo(tempId, vm.OnRefreshViewModel);
         }
 
         public static void OnRefreshViewModel(this MainCharacterProfileViewModel vm, int userId, string name, int level)

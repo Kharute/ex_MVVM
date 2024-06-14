@@ -9,6 +9,7 @@ public class TempProfileViewModel : ViewModelBase
     private int _userId;
     private string _name;
     private int _level;
+    private int _hp;
 
     public int UserId
     {
@@ -39,6 +40,19 @@ public class TempProfileViewModel : ViewModelBase
 
             _level = value;
             OnPropertyChanged(nameof(Level));
+        }
+    }
+
+    public int HP
+    {
+        get { return _hp; }
+        set
+        {
+            // 계속 갱신을 시켜야할 때는 빼주면 된다.
+            if (_hp == value) return;
+
+            _hp = value;
+            OnPropertyChanged(nameof(HP));
         }
     }
 }
